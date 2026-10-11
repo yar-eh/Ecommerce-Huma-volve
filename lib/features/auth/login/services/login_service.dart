@@ -1,0 +1,20 @@
+import 'package:ecommerce_app_huma_volve/core/constants/api_endpoints.dart';
+import 'package:ecommerce_app_huma_volve/core/network/api_client.dart';
+import 'package:ecommerce_app_huma_volve/features/auth/login/models/login_model.dart';
+
+class LoginService {
+  ApiClient apiClient;
+  LoginService(this.apiClient);
+  Future<loginModel> login({
+    required String email,
+    required String password,
+  }) async {
+    final response = await apiClient.dio.post(
+      ApiEndpoints.loginEndpoint,
+      data: {"email": email, "password": password},
+    );
+    final Map<String, dynamic> jsonData = response.data;
+    final modelData = loginModel.fromJson(jsonData);
+    return modelData;
+  }
+}
