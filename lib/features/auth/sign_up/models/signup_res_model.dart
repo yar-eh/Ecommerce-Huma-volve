@@ -30,16 +30,16 @@ class signupResModel {
     updatedAt = json['updatedAt'];
   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['email'] = this.email;
-    data['password'] = this.password;
-    data['name'] = this.name;
-    data['role'] = this.role;
-    data['avatar'] = this.avatar;
-    data['creationAt'] = this.creationAt;
-    data['updatedAt'] = this.updatedAt;
-    return data;
-  }
+  // Map<String, dynamic> toJson() {
+  //   final Map<String, dynamic> data = new Map<String, dynamic>();
+  //   data['id'] = this.id;
+  //   data['email'] = this.email;
+  //   data['password'] = this.password;
+  //   data['name'] = this.name;
+  //   data['role'] = this.role;
+  //   data['avatar'] = this.avatar;
+  //   data['creationAt'] = this.creationAt;
+  //   data['updatedAt'] = this.updatedAt;
+  //   return data;
+  // }
 }
