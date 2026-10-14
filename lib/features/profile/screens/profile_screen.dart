@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../../../core/dummy_data.dart';
 import '../../../core/theme.dart';
-import '../../auth/login/screens/login_screen.dart';
+import '../../auth/login/presentation/view/login_screen.dart';
 import '../widgets/profile_menu_item.dart';
 
 class ProfileScreen extends StatelessWidget {

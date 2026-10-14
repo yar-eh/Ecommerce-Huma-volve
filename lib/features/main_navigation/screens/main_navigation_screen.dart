@@ -25,14 +25,14 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
   late final ApiClient apiClient;
   late final HomeRemoteDataSource remoteDataSource;
   late final HomeRepository homeRepository;
-  late final HomeRepositoryImpl homeRepositoryImpl;
   late final GetProductsUseCase getProductsUseCase;
   late final GetCategoriesUseCase getCategoriesUseCase;
   late final HomeCubit homeCubit;
+  late final List<Widget> _screens; // built once, not on every build
   int _currentIndex = 0;
+
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     apiClient = ApiClient();
     remoteDataSource = HomeRemoteDataSourceImpl(apiClient);
@@ -43,20 +43,24 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
       getProductsUseCase: getProductsUseCase,
       getCategoriesUseCase: getCategoriesUseCase,
     );
+
+    _screens = [
+      BlocProvider.value(value: homeCubit, child: const HomeScreen()),
+      const CartScreen(),
+      const ProfileScreen(),
+    ];
+  }
+
+  @override
+  void dispose() {
+    homeCubit.close();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final List<Widget> _screens = [
-      BlocProvider(
-        create: (BuildContext context) => homeCubit,
-        child: const HomeScreen(),
-      ),
-      const CartScreen(),
-      const ProfileScreen(),
-    ];
     return Scaffold(
-      body: _screens[_currentIndex],
+      body: IndexedStack(index: _currentIndex, children: _screens),
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
           boxShadow: [
