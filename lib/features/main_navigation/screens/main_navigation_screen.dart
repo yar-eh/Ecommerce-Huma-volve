@@ -1,12 +1,17 @@
 import 'package:ecommerce_app_huma_volve/core/network/api_client.dart';
-import 'package:ecommerce_app_huma_volve/features/home/cubit/home_cubit.dart';
-import 'package:ecommerce_app_huma_volve/features/home/service/home_service.dart';
+import 'package:ecommerce_app_huma_volve/features/home/data/data_source/home_remote_data_source.dart';
+import 'package:ecommerce_app_huma_volve/features/home/data/data_source/home_remote_data_source_impl.dart';
+import 'package:ecommerce_app_huma_volve/features/home/data/repository/home_repository_impl.dart';
+import 'package:ecommerce_app_huma_volve/features/home/domain/repository/home_repository.dart';
+import 'package:ecommerce_app_huma_volve/features/home/domain/use_cases/get_categories_use_case.dart';
+import 'package:ecommerce_app_huma_volve/features/home/domain/use_cases/get_products_use_case.dart';
+import 'package:ecommerce_app_huma_volve/features/home/presentation/view_model/home_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/theme.dart';
 import '../../cart/screens/cart_screen.dart';
-import '../../home/screens/home_screen.dart';
+import '../../home/presentation/view/home_screen.dart';
 import '../../profile/screens/profile_screen.dart';
 
 class MainNavigationScreen extends StatefulWidget {
@@ -17,17 +22,27 @@ class MainNavigationScreen extends StatefulWidget {
 }
 
 class _MainNavigationScreenState extends State<MainNavigationScreen> {
-  late final HomeService homeService;
-  late final HomeCubit homeCubit;
   late final ApiClient apiClient;
+  late final HomeRemoteDataSource remoteDataSource;
+  late final HomeRepository homeRepository;
+  late final HomeRepositoryImpl homeRepositoryImpl;
+  late final GetProductsUseCase getProductsUseCase;
+  late final GetCategoriesUseCase getCategoriesUseCase;
+  late final HomeCubit homeCubit;
   int _currentIndex = 0;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     apiClient = ApiClient();
-    homeService = HomeService(apiClient);
-    homeCubit = HomeCubit(homeService);
+    remoteDataSource = HomeRemoteDataSourceImpl(apiClient);
+    homeRepository = HomeRepositoryImpl(remoteDataSource);
+    getProductsUseCase = GetProductsUseCase(homeRepository);
+    getCategoriesUseCase = GetCategoriesUseCase(homeRepository);
+    homeCubit = HomeCubit(
+      getProductsUseCase: getProductsUseCase,
+      getCategoriesUseCase: getCategoriesUseCase,
+    );
   }
 
   @override
