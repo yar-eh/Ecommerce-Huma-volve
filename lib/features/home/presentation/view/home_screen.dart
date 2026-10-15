@@ -17,11 +17,30 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedCategoryIndex = 0;
+  late final ScrollController scrollController;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     context.read<HomeCubit>().loadHomeData();
+    scrollController = ScrollController();
+    scrollController.addListener(_onListen);
+  }
+
+  void _onListen() {
+    final pixels = scrollController.position.pixels; //current user position
+    final max = scrollController.position.maxScrollExtent; // end position
+    int triggerDistance = 200;
+    print('pixels: $pixels , max: $max');
+    if (pixels >= max - triggerDistance) {
+      context.read<HomeCubit>().loadMoreProducts();
+    }
+  }
+
+  @override
+  void dispose() {
+    scrollController.dispose();
+    super.dispose();
   }
 
   @override
@@ -30,6 +49,7 @@ class _HomeScreenState extends State<HomeScreen> {
       backgroundColor: AppTheme.background,
       body: SafeArea(
         child: CustomScrollView(
+          controller: scrollController,
           slivers: [
             SliverToBoxAdapter(
               child: Padding(
@@ -121,7 +141,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       buildWhen: ((previous, current) {
                         if (current is ProductsLoading ||
                             current is ProductsSuccess ||
-                            current is ProductsError) {
+                            current is ProductsError ||
+                            current is ProductsLoadingError ||
+                            current is ProductsLoadingMore) {
                           return false;
                         }
                         return true;
@@ -151,7 +173,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     });
                                     context
                                         .read<HomeCubit>()
-                                        .getProductsByCategory(category.id!);
+                                        .getProductsByCategoryId(category.id!);
                                   },
                                 );
                               },
@@ -167,6 +189,13 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             BlocBuilder<HomeCubit, HomeStates>(
+              buildWhen: ((previous, current) {
+                if (current is ProductsLoadingError ||
+                    current is ProductsLoadingMore) {
+                  return false;
+                }
+                return true;
+              }),
               builder: (BuildContext context, state) {
                 if (state is ProductsLoading) {
                   return SliverToBoxAdapter(
@@ -196,6 +225,19 @@ class _HomeScreenState extends State<HomeScreen> {
                 } else {
                   return SliverToBoxAdapter(child: SizedBox.shrink());
                 }
+              },
+            ),
+            BlocBuilder<HomeCubit, HomeStates>(
+              builder: (context, state) {
+                if (state is ProductsLoadingMore) {
+                  return SliverToBoxAdapter(
+                    child: Padding(
+                      padding: EdgeInsets.all(25),
+                      child: Center(child: CircularProgressIndicator()),
+                    ),
+                  );
+                }
+                return const SliverToBoxAdapter(child: SizedBox(height: 24));
               },
             ),
             const SliverToBoxAdapter(child: SizedBox(height: 24)),

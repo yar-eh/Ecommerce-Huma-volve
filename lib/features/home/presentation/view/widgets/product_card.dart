@@ -54,10 +54,23 @@ class ProductCard extends StatelessWidget {
                         top: Radius.circular(24),
                       ),
                       child: Image.network(
-                        productModel.images![0],
+                        productModel.images.isNotEmpty
+                            ? productModel.images[0]
+                            : '',
                         fit: BoxFit.cover,
                         width: double.infinity,
                         height: double.infinity,
+                        errorBuilder: (context, error, stackTrace) =>
+                            _imagePlaceholder(),
+                        loadingBuilder: (context, child, loadingProgress) {
+                          if (loadingProgress == null) return child;
+                          return Container(
+                            color: Colors.grey.shade100,
+                            child: const Center(
+                              child: CircularProgressIndicator(strokeWidth: 2),
+                            ),
+                          );
+                        },
                       ),
                     ),
                   ),
@@ -130,6 +143,19 @@ class ProductCard extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _imagePlaceholder() {
+    return Container(
+      width: double.infinity,
+      height: double.infinity,
+      color: Colors.grey.shade200,
+      child: Icon(
+        Icons.image_not_supported_outlined,
+        size: 40,
+        color: Colors.grey.shade400,
       ),
     );
   }
