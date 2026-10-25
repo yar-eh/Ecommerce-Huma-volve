@@ -56,26 +56,32 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppTheme.background,
+      backgroundColor: AppTheme.primary,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.shopping_bag, size: 120, color: AppTheme.primary),
+            const Icon(
+              Icons.shopping_bag,
+              size: 120,
+              color: AppTheme.background,
+            ),
             const SizedBox(height: 24),
             Text(
               'Huma-volve',
               style: Theme.of(context).textTheme.displayLarge
-                  ?.copyWith(fontSize: 40, color: AppTheme.primary),
+                  ?.copyWith(fontSize: 40, color: AppTheme.background),
             ),
             const SizedBox(height: 8),
             Text(
               'Your Ultimate E-Commerce App',
-              style: Theme.of(context).textTheme.bodyMedium
-                  ?.copyWith(fontSize: 16, color: Colors.grey.shade600),
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                fontSize: 16,
+                color: AppTheme.background.withValues(alpha: 0.8),
+              ),
             ),
             const SizedBox(height: 48),
-            CircularProgressIndicator(color: AppTheme.primary),
+            const CircularProgressIndicator(color: AppTheme.background),
           ],
         ),
       ),

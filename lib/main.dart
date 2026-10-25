@@ -1,10 +1,11 @@
 import 'package:ecommerce_app_huma_volve/core/routes/app_routing.dart';
 import 'package:flutter/material.dart';
 
+import 'core/app_providers.dart';
 import 'core/theme.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const AppProviders(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {

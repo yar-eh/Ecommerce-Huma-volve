@@ -46,3 +46,7 @@ app.*.map.json
 
 # Widget Preview related
 .widget_preview/
+
+# Large screen recordings
+screenshots/Screen_recording_huma_app.webm
+screenshots/Screen_recording_huma_shop_app.webm

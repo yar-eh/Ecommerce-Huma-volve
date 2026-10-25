@@ -1,8 +1,15 @@
 import 'package:ecommerce_app_huma_volve/features/home/domain/entities/home_product_entity.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../../core/constants/product_options.dart';
 import '../../../../../core/theme.dart';
+import '../../../../cart/domain/entities/cart_item_entity.dart';
+import '../../../../cart/presentation/view_model/cart_cubit.dart';
 import '../../../../details/presentaion/view/product_details_screen.dart';
+import '../../../../wishlist/domain/entities/wishlist_item_entity.dart';
+import '../../../../wishlist/presentation/view_model/wishlist_cubit.dart';
+import '../../../../wishlist/presentation/view_model/wishlist_states.dart';
 
 class ProductCard extends StatelessWidget {
   // final Product product;
@@ -77,17 +84,39 @@ class ProductCard extends StatelessWidget {
                   Positioned(
                     top: 12,
                     right: 12,
-                    child: Container(
-                      padding: const EdgeInsets.all(8),
-                      decoration: const BoxDecoration(
-                        color: Colors.white,
-                        shape: BoxShape.circle,
-                      ),
-                      child: const Icon(
-                        Icons.favorite_border,
-                        size: 18,
-                        color: AppTheme.accent,
-                      ),
+                    child: BlocBuilder<WishlistCubit, WishlistStates>(
+                      builder: (context, state) {
+                        final isFavorite =
+                            state is WishlistSuccess &&
+                            state.contains(productModel.id);
+                        return GestureDetector(
+                          onTap: () =>
+                              context.read<WishlistCubit>().toggleWishlist(
+                                WishlistItemEntity(
+                                  id: productModel.id,
+                                  title: productModel.title,
+                                  price: productModel.price.toDouble(),
+                                  imageUrl: productModel.images.isNotEmpty
+                                      ? productModel.images.first
+                                      : '',
+                                ),
+                              ),
+                          child: Container(
+                            padding: const EdgeInsets.all(8),
+                            decoration: const BoxDecoration(
+                              color: Colors.white,
+                              shape: BoxShape.circle,
+                            ),
+                            child: Icon(
+                              isFavorite
+                                  ? Icons.favorite
+                                  : Icons.favorite_border,
+                              size: 18,
+                              color: AppTheme.primary,
+                            ),
+                          ),
+                        );
+                      },
                     ),
                   ),
                 ],
@@ -123,16 +152,45 @@ class ProductCard extends StatelessWidget {
                             fontSize: 18,
                           ),
                         ),
-                        Container(
-                          padding: const EdgeInsets.all(6),
-                          decoration: const BoxDecoration(
-                            color: AppTheme.primary,
-                            shape: BoxShape.circle,
-                          ),
-                          child: const Icon(
-                            Icons.add,
-                            color: Colors.white,
-                            size: 16,
+                        GestureDetector(
+                          onTap: () {
+                            context.read<CartCubit>().addToCart(
+                              CartItemEntity(
+                                productId: productModel.id,
+                                title: productModel.title,
+                                imageUrl: productModel.images.isNotEmpty
+                                    ? productModel.images.first
+                                    : '',
+                                price: productModel.price.toDouble(),
+                                size: ProductOptions.sizes.first,
+                                colorValue: ProductOptions.colors.first
+                                    .toARGB32(),
+                              ),
+                            );
+                            ScaffoldMessenger.of(context)
+                              ..hideCurrentSnackBar()
+                              ..showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                    '${productModel.title} added to cart',
+                                  ),
+                                  duration: const Duration(milliseconds: 1500),
+                                  behavior: SnackBarBehavior.floating,
+                                  backgroundColor: AppTheme.primary,
+                                ),
+                              );
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.all(6),
+                            decoration: const BoxDecoration(
+                              color: AppTheme.primary,
+                              shape: BoxShape.circle,
+                            ),
+                            child: const Icon(
+                              Icons.add,
+                              color: AppTheme.background,
+                              size: 16,
+                            ),
                           ),
                         ),
                       ],

@@ -1,3 +1,4 @@
+import 'package:ecommerce_app_huma_volve/core/theme.dart';
 import 'package:flutter/material.dart';
 
 class SizeSelector extends StatelessWidget {
@@ -25,16 +26,17 @@ class SizeSelector extends StatelessWidget {
             height: 40,
             alignment: Alignment.center,
             decoration: BoxDecoration(
-              color: isSelected ? Theme.of(context).primaryColor : Colors.transparent,
+              color: isSelected ? AppTheme.primary : Colors.transparent,
               shape: BoxShape.circle,
               border: Border.all(
-                color: isSelected ? Theme.of(context).primaryColor : Colors.grey.shade300,
+                color: isSelected ? AppTheme.primary : Colors.grey.shade300,
               ),
             ),
             child: Text(
               size,
               style: TextStyle(
-                color: isSelected ? Colors.white : Colors.black87,
+                fontSize: 25,
+                color: isSelected ? AppTheme.background : Colors.black87,
                 fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
               ),
             ),

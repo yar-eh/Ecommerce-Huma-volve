@@ -1,12 +1,12 @@
+import 'package:ecommerce_app_huma_volve/core/theme.dart';
 import 'package:flutter/material.dart';
-
-import '../theme.dart';
 
 class PrimaryButton extends StatelessWidget {
   final String text;
-  final VoidCallback onPressed;
-  bool isLoading;
-  PrimaryButton({
+  final VoidCallback? onPressed;
+  final bool isLoading;
+
+  const PrimaryButton({
     super.key,
     required this.text,
     required this.onPressed,
@@ -15,43 +15,35 @@ class PrimaryButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: AppTheme.primary.withValues(alpha: 0.3),
-            spreadRadius: 0,
-            blurRadius: 15,
-            offset: const Offset(0, 8),
-          ),
-        ],
-        gradient: const LinearGradient(
-          colors: [AppTheme.primary, Color(0xFF3F4145)],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-      ),
+    return SizedBox(
+      width: double.infinity,
+      height: 56,
       child: ElevatedButton(
-        onPressed: onPressed,
+        onPressed: isLoading ? null : onPressed,
         style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.transparent,
-          foregroundColor: Colors.white,
-          shadowColor: Colors.transparent,
-          padding: const EdgeInsets.symmetric(vertical: 18),
+          backgroundColor: AppTheme.primary,
+          foregroundColor: AppTheme.background,
+          disabledBackgroundColor: AppTheme.primary.withValues(alpha: 0.7),
+          disabledForegroundColor: AppTheme.background,
+          elevation: 0,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),
           ),
-          minimumSize: const Size(double.infinity, 56),
         ),
         child: isLoading
-            ? CircularProgressIndicator(color: Colors.white)
+            ? const SizedBox(
+                width: 24,
+                height: 24,
+                child: CircularProgressIndicator(
+                  strokeWidth: 2.5,
+                  color: AppTheme.background,
+                ),
+              )
             : Text(
                 text,
                 style: const TextStyle(
                   fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: 1.2,
+                  fontWeight: FontWeight.w600,
                 ),
               ),
       ),

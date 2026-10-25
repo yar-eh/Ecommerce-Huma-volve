@@ -1,3 +1,4 @@
+import 'package:ecommerce_app_huma_volve/core/theme.dart';
 import 'package:flutter/material.dart';
 
 class ColorSelector extends StatelessWidget {
@@ -25,14 +26,11 @@ class ColorSelector extends StatelessWidget {
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               border: Border.all(
-                color: isSelected ? Theme.of(context).primaryColor : Colors.transparent,
+                color: isSelected ? AppTheme.primary : Colors.transparent,
                 width: 2,
               ),
             ),
-            child: CircleAvatar(
-              radius: 16,
-              backgroundColor: color,
-            ),
+            child: CircleAvatar(radius: 16, backgroundColor: color),
           ),
         );
       }).toList(),
