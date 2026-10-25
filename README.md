@@ -31,16 +31,16 @@
 
 <table>
   <tr>
-    <td align="center"><img src="screenshots/Screenshot_login.png" width="200" alt="Login"/><br/><b>Login</b></td>
-    <td align="center"><img src="screenshots/Screenshot_signup.png" width="200" alt="Sign up"/><br/><b>Sign up</b></td>
-    <td align="center"><img src="screenshots/Screenshot_home_page.png" width="200" alt="Home"/><br/><b>Home</b></td>
-    <td align="center"><img src="screenshots/Screenshot_details_page.png" width="200" alt="Product details"/><br/><b>Product details</b></td>
+    <td align="center"><img src="screenshots/login.png" width="200" alt="Login"/><br/><b>Login</b></td>
+    <td align="center"><img src="screenshots/signup.png" width="200" alt="Sign up"/><br/><b>Sign up</b></td>
+    <td align="center"><img src="screenshots/home.png" width="200" alt="Home"/><br/><b>Home</b></td>
+    <td align="center"><img src="screenshots/product_details.png" width="200" alt="Product details"/><br/><b>Product details</b></td>
   </tr>
   <tr>
-    <td align="center"><img src="screenshots/Screenshot_cart_page.png" width="200" alt="Cart"/><br/><b>Cart</b></td>
-    <td align="center"><img src="screenshots/Screenshot_wishlist_page.png" width="200" alt="Wishlist"/><br/><b>Wishlist</b></td>
-    <td align="center"><img src="screenshots/Screenshot_orders_page.png" width="200" alt="Orders"/><br/><b>My orders</b></td>
-    <td align="center"><img src="screenshots/Screenshot_profile_page.png" width="200" alt="Profile"/><br/><b>Profile</b></td>
+    <td align="center"><img src="screenshots/cart.png" width="200" alt="Cart"/><br/><b>Cart</b></td>
+    <td align="center"><img src="screenshots/wishlist.png" width="200" alt="Wishlist"/><br/><b>Wishlist</b></td>
+    <td align="center"><img src="screenshots/orders.png" width="200" alt="Orders"/><br/><b>My orders</b></td>
+    <td align="center"><img src="screenshots/profile.png" width="200" alt="Profile"/><br/><b>Profile</b></td>
   </tr>
 </table>
 
